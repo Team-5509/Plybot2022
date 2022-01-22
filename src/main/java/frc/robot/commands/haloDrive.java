@@ -54,7 +54,7 @@ public class haloDrive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double y =RobotContainer.getInstance().getdriverJoystick().getRawAxis(1);
+        double y =(-1)*(RobotContainer.getInstance().getdriverJoystick().getRawAxis(1));
         double x =RobotContainer.getInstance().getdriverJoystick().getRawAxis(0);
         double rotation =RobotContainer.getInstance().getdriverJoystick().getRawAxis(4);
         m_driveTrain.drive(x, y, rotation);

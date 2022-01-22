@@ -54,6 +54,10 @@ public class driveTrain extends SubsystemBase {
         FrontRightMotor= new WPI_TalonSRX(1);
         BackLeftMotor= new WPI_TalonSRX(8);
         BackRightMotor= new WPI_TalonSRX(13);
+
+        FrontRightMotor.setInverted(true);
+        BackRightMotor.setInverted(true);
+
         mecanumDrive= new MecanumDrive(FrontLeftMotor,FrontRightMotor,BackLeftMotor,BackRightMotor);
         
     }
