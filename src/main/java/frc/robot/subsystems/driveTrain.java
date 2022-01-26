@@ -58,7 +58,7 @@ public class driveTrain extends SubsystemBase {
         FrontRightMotor.setInverted(true);
         BackRightMotor.setInverted(true);
 
-        mecanumDrive= new MecanumDrive(FrontLeftMotor,FrontRightMotor,BackLeftMotor,BackRightMotor);
+        mecanumDrive= new MecanumDrive(FrontLeftMotor,BackLeftMotor,FrontRightMotor,BackRightMotor);
         
     }
 
@@ -79,7 +79,7 @@ public class driveTrain extends SubsystemBase {
 
     // Y is forwards, x is strafe
     public void drive(double x,double y,double rotation){
-        mecanumDrive.driveCartesian(x, y, rotation);
+        mecanumDrive.driveCartesian(y, x, rotation);
     }
     public void stop(){
         drive(0,0,0);
