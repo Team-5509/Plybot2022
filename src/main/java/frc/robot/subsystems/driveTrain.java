@@ -76,8 +76,10 @@ public class driveTrain extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+    // Y is forwards, x is strafe
     public void drive(double x,double y,double rotation){
-        mecanumDrive.driveCartesian(y, x, rotation);
+        mecanumDrive.driveCartesian(x, y, rotation);
     }
     public void stop(){
         drive(0,0,0);
