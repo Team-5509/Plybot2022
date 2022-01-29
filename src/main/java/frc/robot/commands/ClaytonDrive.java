@@ -58,6 +58,7 @@ public class ClaytonDrive extends CommandBase {
         double x =RobotContainer.getInstance().getdriverJoystick().getRawAxis(0);
         double rotation =RobotContainer.getInstance().getdriverJoystick().getRawAxis(2);
         double deadband = .2;
+        int delinearization = 3;
         if (Math.abs(x) < deadband){
             x = 0;
         }
@@ -67,6 +68,9 @@ public class ClaytonDrive extends CommandBase {
         if (Math.abs(rotation) < deadband){
             rotation = 0;
         }
+        x = Math.pow(x,delinearization);
+        y = Math.pow(y,delinearization);
+        rotation = Math.pow(rotation,delinearization);
         m_driveTrain.drive(x, y, rotation);
     }
 

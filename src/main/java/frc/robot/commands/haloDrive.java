@@ -57,6 +57,20 @@ public class haloDrive extends CommandBase {
         double y =(-1)*(RobotContainer.getInstance().getdriverJoystick().getRawAxis(1));
         double x =RobotContainer.getInstance().getdriverJoystick().getRawAxis(0);
         double rotation =RobotContainer.getInstance().getdriverJoystick().getRawAxis(4);
+        double deadband = .2;
+        int delinearization = 3;
+        if (Math.abs(x) < deadband){
+            x = 0;
+        }
+        if (Math.abs(y) < deadband){
+            y = 0;
+        }
+        if (Math.abs(rotation) < deadband){
+            rotation = 0;
+        }
+        x = Math.pow(x,delinearization);
+        y = Math.pow(y,delinearization);
+        rotation = Math.pow(rotation,delinearization);
         m_driveTrain.drive(x, y, rotation);
     }
 
