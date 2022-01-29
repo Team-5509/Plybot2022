@@ -129,7 +129,7 @@ Properties:
   Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\Kanar\',
     extension: null, folder: true, name: Wiring file location, validators: null, value: 'C:\Users\Robotics\'}
   Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\Kanar\FRCProjects',
-    extension: null, folder: true, name: Export Directory, validators: null, value: 'C:\Users\Robotics\FRCProjects'}
+    extension: null, folder: true, name: Export Directory, validators: null, value: 'C:\Users\Kanar\OneDrive\Documents'}
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: Autonomous Command}
 Base: Robot
