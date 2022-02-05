@@ -43,7 +43,7 @@ public class driveTrain extends SubsystemBase {
     /**
     *
     */
-    private final static double TICKSPERFOOT= 165;
+    private final static double TICKSPERFOOT= 532;
     private final static double FEETPERTICK= 1/TICKSPERFOOT;
     private WPI_TalonSRX FrontLeftMotor;
     private WPI_TalonSRX FrontRightMotor;
@@ -59,6 +59,7 @@ public class driveTrain extends SubsystemBase {
         BackLeftMotor= new WPI_TalonSRX(8);
         BackRightMotor= new WPI_TalonSRX(13);
         FrontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        BackRightMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         ResetEncoders();
 
         FrontRightMotor.setInverted(true);
@@ -70,13 +71,16 @@ public class driveTrain extends SubsystemBase {
 
     public void ResetEncoders() {
         FrontLeftMotor.setSelectedSensorPosition(0);
+        BackRightMotor.setSelectedSensorPosition(0);
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         double ticks = FrontLeftMotor.getSelectedSensorPosition();
-        SmartDashboard.putNumber("ticks", ticks);
+        SmartDashboard.putNumber("Front Left Ticks", ticks);
+        ticks = BackRightMotor.getSelectedSensorPosition();
+        SmartDashboard.putNumber("Back Right Ticks", ticks);
 
     }
 
@@ -89,7 +93,7 @@ public class driveTrain extends SubsystemBase {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 public double distanceTraveledInFeet () {
-    return FrontLeftMotor.getSelectedSensorPosition()*FEETPERTICK*-1;
+    return BackRightMotor.getSelectedSensorPosition()*FEETPERTICK*-1;
 }
     // Y is forwards, x is strafe
     public void drive(double x,double y,double rotation){

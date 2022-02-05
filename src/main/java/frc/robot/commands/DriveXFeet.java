@@ -7,14 +7,20 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.driveTrain;
 
 public class DriveXFeet extends PIDCommand{
+  private final driveTrain Drivetrain;
     public DriveXFeet (double FeetToDrive, driveTrain Drivetrain) {
-        super(new PIDController(.1, 0, 0),
+        super(new PIDController(.2, 0, 0),
          Drivetrain::distanceTraveledInFeet,
          FeetToDrive, 
          output->Drivetrain.drive(0, MathUtil.clamp(output, -.3, .3), 0),
          Drivetrain);
-         Drivetrain.ResetEncoders();
+         this.Drivetrain=Drivetrain;
+         
         
+    }
+    @Override
+    public void initialize (){
+      Drivetrain.ResetEncoders();
     }
     @Override
     public boolean isFinished() {
