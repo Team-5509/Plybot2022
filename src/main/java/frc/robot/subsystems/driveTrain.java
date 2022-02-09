@@ -15,6 +15,7 @@ package frc.robot.subsystems;
 
 import frc.robot.commands.*;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -44,6 +45,8 @@ public class driveTrain extends SubsystemBase {
     /**
     *
     */
+    private final static double TICKSPERFOOT= 532;
+    private final static double FEETPERTICK= 1/TICKSPERFOOT;
     private WPI_TalonSRX FrontLeftMotor;
     private WPI_TalonSRX FrontRightMotor;
     private WPI_TalonSRX BackLeftMotor;
@@ -61,6 +64,9 @@ public class driveTrain extends SubsystemBase {
         FrontRightMotor= new WPI_TalonSRX(1);
         BackLeftMotor= new WPI_TalonSRX(8);
         BackRightMotor= new WPI_TalonSRX(13);
+        FrontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        BackRightMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        ResetEncoders();
 
         FrontRightMotor.setInverted(true);
         BackRightMotor.setInverted(true);
@@ -68,6 +74,11 @@ public class driveTrain extends SubsystemBase {
         mecanumDrive= new MecanumDrive(FrontLeftMotor,BackLeftMotor,FrontRightMotor,BackRightMotor);
         ultrasonic=new AnalogInput(0);
         
+    }
+
+    public void ResetEncoders() {
+        FrontLeftMotor.setSelectedSensorPosition(0);
+        BackRightMotor.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -80,6 +91,10 @@ public class driveTrain extends SubsystemBase {
         SmartDashboard.putNumber("distance in inches", currentDistanceInches);
         SmartDashboard.putNumber("distance in centimeters", currentDistanceCentimeters);
         // This method will be called once per scheduler run
+        double ticks = FrontLeftMotor.getSelectedSensorPosition();
+        SmartDashboard.putNumber("Front Left Ticks", ticks);
+        ticks = BackRightMotor.getSelectedSensorPosition();
+        SmartDashboard.putNumber("Back Right Ticks", ticks);
 
     }
 
@@ -91,7 +106,9 @@ public class driveTrain extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+public double distanceTraveledInFeet () {
+    return BackRightMotor.getSelectedSensorPosition()*FEETPERTICK*-1;
+}
     // Y is forwards, x is strafe
     public void drive(double x,double y,double rotation){
         mecanumDrive.driveCartesian(y, x, rotation);
