@@ -57,8 +57,11 @@ public class haloDrive extends CommandBase {
         double y =(-1)*(RobotContainer.getInstance().getdriverJoystick().getRawAxis(1));
         double x =RobotContainer.getInstance().getdriverJoystick().getRawAxis(0);
         double rotation =RobotContainer.getInstance().getdriverJoystick().getRawAxis(4);
+        boolean halfFinesseMode = RobotContainer.getInstance().getdriverJoystick().getRawButton(9);
+        boolean thirdFinesseMode = RobotContainer.getInstance().getdriverJoystick().getRawButton(10);
         double deadband = .2;
         int delinearization = 3;
+        double finnesseValue = 1;
         if (Math.abs(x) < deadband){
             x = 0;
         }
@@ -71,7 +74,13 @@ public class haloDrive extends CommandBase {
         x = Math.pow(x,delinearization);
         y = Math.pow(y,delinearization);
         rotation = Math.pow(rotation,delinearization);
-        m_driveTrain.drive(x, y, rotation);
+        if (halfFinesseMode){
+            finnesseValue*=.5;
+        }
+        if (thirdFinesseMode){
+            finnesseValue*=.33;
+        }
+        m_driveTrain.drive(finnesseValue*x, finnesseValue*y, finnesseValue*rotation);
     }
 
     // Called once the command ends or is interrupted.
